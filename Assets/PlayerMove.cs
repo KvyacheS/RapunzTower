@@ -10,10 +10,10 @@ public class PlayerMove : MonoBehaviour {
     [SerializeField] private Vector3 Rotatepoint = new Vector3(0f,0f,0f);
     [SerializeField] private float angle = 1f;
     private Animator animator;
-    private BoxCollider coll;
+    private CapsuleCollider coll;
     void Start () {
         animator = GetComponent<Animator>();
-        coll = GetComponent<BoxCollider>();
+        coll = GetComponent<CapsuleCollider>();
 	}
 	
 	// Update is called once per frame

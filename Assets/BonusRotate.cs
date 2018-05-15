@@ -15,5 +15,6 @@ public class BonusRotate : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.Rotate(xSpeed, ySpeed, zSpeed);
+        //transform.RotateAround(transform.position, Vector3.up, 20f);
 	}
 }
