@@ -156,6 +156,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d03e56c0e5d324fb809667dd4ebcb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 10
+  lifeTimeOverall: 6
+  lifeTimeAfterCollide: 3
 --- !u!135 &135284772684795414
 SphereCollider:
   m_ObjectHideFlags: 1
