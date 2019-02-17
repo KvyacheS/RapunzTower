@@ -28,17 +28,17 @@ public class BonusCollect : MonoBehaviour {
             switch (effect)
             {
                 case EffectType.Score:
-                    Debug.Log("score");
-                    player.changePoints(points);
+                   // Debug.Log("score");
+                    GameController.LevelPoints += points;
                     break;
                 case EffectType.Invisibility:
-                    Debug.Log("Invisiability");
+                   // Debug.Log("Invisiability");
                     player.MakeInvisible();
                     break;
                 case EffectType.Life:
-                    Debug.Log("Life");
-                    player.changePoints(points);
-                    player.changeHealth(life);
+                   // Debug.Log("Life");
+                    GameController.LevelPoints += points;
+                    player.Health += life;
                     break;
             }
             Destroy(gameObject);

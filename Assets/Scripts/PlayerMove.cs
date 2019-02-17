@@ -11,6 +11,7 @@ public class PlayerMove : MonoBehaviour {
     [SerializeField] private float angle = 1f;
     private Animator animator;
     private CapsuleCollider coll;
+
     void Start () {
         animator = GetComponent<Animator>();
         coll = GetComponent<CapsuleCollider>();
@@ -18,23 +19,20 @@ public class PlayerMove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (GameController.paused == true)
+            return;
         float yAxis = Input.GetAxis("Vertical");
         if (yAxis != 0)
         {
             animator.SetBool("VertMotion", true);
             if (yAxis>0)
-            {
                 animator.SetBool("Down", false);
-            }
             else
-            {
                 animator.SetBool("Down", true);
-            }
         }
         else
-        {
             animator.SetBool("VertMotion", false);
-        }
+
         transform.Translate(0, yAxis*vertSpeed, 0);
 
         float xAxis = Input.GetAxis("Horizontal");
@@ -42,37 +40,23 @@ public class PlayerMove : MonoBehaviour {
         {
             animator.SetBool("HoriMotion", true);
             if (xAxis>0)
-            {
-                animator.SetBool("ReverseSide", false);
-            }
+                animator.SetBool("ReverseSide", false); 
             else
-            {
                 animator.SetBool("ReverseSide", true);
-            }
         }
         else
-        {
             animator.SetBool("HoriMotion", false);
-        }
 
         if ((yAxis == 0) && (xAxis == 0))
-        {
             coll.center = Vector3.MoveTowards(coll.center, new Vector3(0, 1.44f, 0), 0.1f);
-        }
         else
         {
             if(yAxis == 0)
-            {
                 coll.center = Vector3.MoveTowards(coll.center, new Vector3(0, 2.0f, 0), 0.1f);
-            }
             else if (yAxis>0)
-            {
                 coll.center = Vector3.MoveTowards(coll.center, new Vector3(0, 1.70f, 0), 0.1f);
-            }
-            else
-            {            
+            else           
                 coll.center = Vector3.MoveTowards(coll.center, new Vector3(0, 2.85f, 0), 0.1f);
-            }
         }
         transform.RotateAround(Rotatepoint, new Vector3(0f, -horiSpeed*xAxis, 0f), angle);
     }

@@ -22,7 +22,7 @@ public class Pebel : MonoBehaviour {
         Player player = collision.gameObject.GetComponent<Player>();
         if (player != null)
         {
-            player.changeHealth(-damage);
+            player.Health -= damage;
             StartCoroutine(Vanish(lifeTimeAfterCollide));
         }
     }

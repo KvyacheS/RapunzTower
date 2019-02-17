@@ -8,7 +8,6 @@ public class BalCony : MonoBehaviour
 
     // Use this for initialization
     [SerializeField] private string nextSceneName;
-    //[SerializeField] private Scene nextScene;
 
     void Start()
     {
@@ -20,18 +19,10 @@ public class BalCony : MonoBehaviour
     {
 
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        Player player = collision.gameObject.GetComponent<Player>();
-        if (player != null)
-        {
-            if (nextSceneName != null)
-                SceneManager.LoadScene(nextSceneName, LoadSceneMode.Single);
-        }
-    }
 
     private void OnTriggerEnter(Collider other)
     {
+        GameController.GamePoints = GameController.LevelPoints;
         Player player = other.GetComponent<Player>();
         if (player != null)
         {

@@ -22,30 +22,22 @@ public class WindowFrame : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if(isGobl)
-        {
             rend.material.mainTexture = frameGobl;
-        }
         else
-        {
-            rend.material.mainTexture = frameWithoutGobl;
-        }
-        
+            rend.material.mainTexture = frameWithoutGobl;        
     }
 
     private IEnumerator Shoot()
     {
-        //yield return new WaitForSeconds(1);
         if (projectile != null)
-        {
             while (true)
             {
                 isGobl = false;
                 yield return new WaitForSeconds(1.5f);
-                Instantiate(projectile, new Vector3(transform.position.x+offset.x,transform.position.y + offset.y,transform.position.z + offset.z),Quaternion.identity);
-                
+               
+                Instantiate(projectile, transform.position + transform.rotation * new Vector3(offset.x,offset.y,offset.z),transform.rotation);
                 isGobl = true;
                 yield return new WaitForSeconds(1.5f);
             }
-        }
     }
 }

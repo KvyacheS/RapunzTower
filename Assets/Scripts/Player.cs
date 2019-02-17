@@ -5,56 +5,58 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     // Use this for initialization
-    public bool isInvisible;
-    public bool isRestart;
-    [SerializeField] private int health=100;
-    [SerializeField] private int levelPoints=0;
-    [SerializeField] private float invisTimeInSec = 5.0f;
-    [SerializeField] private UIControl control;
+    public static bool isInvisible;
+    public static bool isRestart;
+    private int health = 100;
+    public  int Health
+    {
+        get
+        {
+            return health;
+        }
+        set
+        {
+            if(!isInvisible)
+                health = Mathf.Clamp(value, 0, 100);            
+        }
+    }
+    [SerializeField] private static float invisTimeInSec = 5.0f;
+    [SerializeField] private static UIControl control;
+
+    //public static Player instance;
+
+    /*void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
+    }*/
+
 
 	void Start () {
         isInvisible = false;
-        levelPoints += GameController.points;
+        control = FindObjectOfType<UIControl>();
     }
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    public void changeHealth(int value)
-    {
-        if ((value < 0) && isInvisible)
-            return;
-        if (health + value > 100)
-            return;
-        health += value;
-        if (health <= 0)
+	void FixedUpdate () {
+        if (health == 0)
         {
             if (control != null)
             {
                 control.OnOpenMenu();
+                GameController.gameover = true;
             }
         }
     }
 
-    public void SetIsRestart(bool value)
+    public static void SetIsRestart(bool value)
     {
         isRestart = value;
     }
-    public int GetHealth()
-    {
-        return health;
-    }
 
-    public int GetPoints()
-    {
-        return levelPoints;
-    }
-    public void changePoints(int value)
-    {
-        levelPoints += value;
-    }
     public IEnumerator MakeInvisible()
     {
         isInvisible = true;
@@ -66,6 +68,5 @@ public class Player : MonoBehaviour {
     {
         if (isRestart)
             return;
-        GameController.points = levelPoints;
     }
 }

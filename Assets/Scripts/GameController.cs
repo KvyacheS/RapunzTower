@@ -6,8 +6,10 @@ public class GameController : MonoBehaviour {
     // Use this for initialization
     public static GameController instance = null;
 
-    public static int points = 0;
-
+    public static int LevelPoints = 0;
+    public static int GamePoints = 0;
+    public static bool paused = false;
+    public static bool gameover = false;
 
     void Awake () {
         if (instance == null)
@@ -22,14 +24,16 @@ public class GameController : MonoBehaviour {
 		
 	}
     public static void SetPause(bool isPaused)
-    {
+    { 
         if (isPaused)
         {
             Time.timeScale = 0;
+            paused = true;
         }
         else
         {
-            Time.timeScale = 1;           
+            Time.timeScale = 1;
+            paused = false;
         }
     }
 

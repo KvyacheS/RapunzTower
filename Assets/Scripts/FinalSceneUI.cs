@@ -8,13 +8,11 @@ public class FinalSceneUI : MonoBehaviour {
 
     // Use this for initialization
     [SerializeField] private Text scoreTxt;
-    [SerializeField] private GameController gc;
+    //[SerializeField] private GameController gc;
 	void Start () {
-        gc = FindObjectOfType<GameController>();
+        //gc = FindObjectOfType<GameController>();
 		if(scoreTxt != null)
-        {
-            scoreTxt.text += " " + GameController.points;
-        }
+            scoreTxt.text += " " + GameController.GamePoints;  
 	}
 	
 	// Update is called once per frame
@@ -24,7 +22,8 @@ public class FinalSceneUI : MonoBehaviour {
 
     public void OnExitToMenu()
     {
-        Destroy(gc);
+        GameController.GamePoints = 0;
+        Destroy(GameController.instance);
         SceneManager.LoadScene("GameMenu", LoadSceneMode.Single);
     }
     public void OnExitFromGame()

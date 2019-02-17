@@ -11,52 +11,40 @@ public class UIControl : MonoBehaviour {
     public Text ScoreField;
     public Text gameOverText;
     private bool isMenuOpen;
-    private GameController gc;
     [SerializeField] private Player player;
 
 	void Start () {
         isMenuOpen = false;
         if(menu!= null)
-        {
             menu.SetActive(false);
-        }
+
         if (HealthField != null)
-        {
-            HealthField.text = "HEALTH: " + player.GetHealth().ToString();
-        }
+            HealthField.text = "HEALTH: " + player.Health.ToString();
+
         if (ScoreField != null)
-        {
-            ScoreField.text = "SCORE: " + player.GetPoints().ToString();
-        }
+            ScoreField.text = "SCORE: " +  GameController.LevelPoints.ToString();
+
         if (gameOverText != null)
-        {
             gameOverText.gameObject.SetActive(false);
-        }
-        gc = FindObjectOfType<GameController>();
     }
     // Update is called once per frame
 	void Update () {
         if (HealthField != null)
-        {
-            HealthField.text = "HEALTH: " + player.GetHealth().ToString();
-        }
+            HealthField.text = "HEALTH: " + player.Health.ToString();
+
         if (ScoreField != null)
-        {
-            ScoreField.text = "SCORE: " + player.GetPoints().ToString();
-           
-        }
-
+            ScoreField.text = "SCORE: " + GameController.LevelPoints.ToString();        
     }
-
 
     public void OnOpenMenu()
     {
-        
+        if (GameController.gameover == true)
+            return;
         if (menu != null)
         {
-            if (player.GetHealth() <= 0)
+            if (player.Health <= 0)
             { 
-                if ((resumeButton != null) && (player.GetHealth() <= 0))
+                if ((resumeButton != null) && (player.Health <= 0))
                     resumeButton.SetActive(false);
                 if (gameOverText != null)
                     gameOverText.gameObject.SetActive(true);
@@ -64,21 +52,22 @@ public class UIControl : MonoBehaviour {
             isMenuOpen = !isMenuOpen;
             menu.SetActive(isMenuOpen);
             GameController.SetPause(isMenuOpen);
-           // player.gameObject.SetActive(!isMenuOpen);
-        }    
-       
+        }         
     }
     
     public void OnRestartLevel()
     {
+        GameController.gameover = false;
         GameController.SetPause(false);
-        player.SetIsRestart(true);
+        Player.SetIsRestart(true);        
+        GameController.LevelPoints = GameController.GamePoints;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);      
     }
 
     public void OnExitToMainMenu()
     {
-        Destroy(gc);
+        Destroy(GameController.instance);
+        GameController.GamePoints = 0;
         SceneManager.LoadScene("GameMenu", LoadSceneMode.Single);
     }
 
@@ -89,6 +78,8 @@ public class UIControl : MonoBehaviour {
 
     public void OnStartGame()
     {
+        GameController.GamePoints = 0;
+        GameController.LevelPoints = 0;
         SceneManager.LoadScene("Level1", LoadSceneMode.Single);
     }
 }
